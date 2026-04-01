@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VaultGen Pro | Fixed Version</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { neon: '#00f2ff', audit: '#bc13fe', cyberDark: '#020617' } } }
+        }
+    </script>
+</head>
+<body class="bg-cyberDark text-slate-200 font-['Space_Grotesk'] min-h-screen overflow-x-hidden">
+
+    <div class="fixed inset-0 z-0"><div class="grid-background"></div></div>
+
+    <main class="relative z-10 container mx-auto px-6 py-12 flex flex-col items-center">
+        
+        <h1 class="text-5xl font-bold text-white mb-12 tracking-tighter text-center">VAULT<span class="text-neon glow-text">GEN</span> PRO</h1>
+
+        <div class="flex flex-col lg:flex-row gap-8 w-full max-w-6xl items-stretch">
+            
+            <div class="flex-1 glass-container p-8 rounded-[2.5rem] border border-white/10 shadow-2xl">
+                <h2 class="text-xl font-bold text-white mb-8 flex items-center gap-2"><span class="text-neon italic">#</span> Key Generator</h2>
+                
+                <div class="relative mb-8 group">
+                    <div class="flex items-center bg-black/60 border border-white/5 rounded-2xl p-5">
+                        <input type="text" id="password-display" readonly class="w-full bg-transparent font-['Fira_Code'] text-2xl text-neon outline-none" value="">
+                        <button id="copy-btn" class="ml-2 text-slate-400 hover:text-neon p-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="space-y-8">
+                    <div>
+                        <div class="flex justify-between text-sm mb-4"><span>Entropy Level</span><span id="length-val" class="text-neon font-mono font-bold">16</span></div>
+                        <input type="range" id="length-slider" min="8" max="50" value="16" class="cyber-range">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <label class="cyber-checkbox"><input type="checkbox" id="upper" checked><div class="check-box"></div><span>Uppercase</span></label>
+                        <label class="cyber-checkbox"><input type="checkbox" id="numbers" checked><div class="check-box"></div><span>Digits</span></label>
+                        <label class="cyber-checkbox"><input type="checkbox" id="symbols" checked><div class="check-box"></div><span>Symbols</span></label>
+                        <label class="cyber-checkbox"><input type="checkbox" id="avoid-similar"><div class="check-box"></div><span>Smart Filter</span></label>
+                    </div>
+                    <button id="generate-btn" class="w-full py-5 rounded-2xl bg-neon text-cyberDark font-black uppercase tracking-widest hover:brightness-110 shadow-[0_0_30px_rgba(0,242,255,0.4)] transition-all">
+                        INITIALIZE PROTOCOL
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex-1 glass-container p-8 rounded-[2.5rem] border border-audit/20 shadow-2xl flex flex-col">
+                <h2 class="text-xl font-bold text-white mb-8 flex items-center gap-2"><span class="text-audit italic">#</span> Security Auditor</h2>
+
+                <div class="flex flex-col md:flex-row gap-8 items-center h-full">
+                    <div class="relative flex-shrink-0">
+                        <svg class="w-40 h-40 transform -rotate-90">
+                            <circle cx="80" cy="80" r="70" stroke="rgba(255,255,255,0.05)" stroke-width="8" fill="transparent" />
+                            <circle id="audit-circle" cx="80" cy="80" r="70" stroke="#bc13fe" stroke-width="10" fill="transparent" 
+                                stroke-dasharray="440" stroke-dashoffset="440" stroke-linecap="round"
+                                class="transition-all duration-700 ease-out" />
+                        </svg>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center">
+                            <span id="audit-score" class="text-3xl font-black text-white">0%</span>
+                            <span class="text-[8px] text-slate-500 uppercase tracking-widest">SCORE</span>
+                        </div>
+                    </div>
+
+                    <div class="flex-1 w-full space-y-4">
+                        <div class="relative flex items-center">
+                            <input type="password" id="user-input" placeholder="Type key..." 
+                                class="w-full bg-black/40 border border-white/10 rounded-xl py-4 pl-5 pr-12 font-mono text-audit outline-none focus:border-audit/50 transition-all">
+                            <button id="eye-toggle" class="absolute right-4 text-slate-500 hover:text-audit">
+                                <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                            </button>
+                        </div>
+                        <div id="audit-status" class="text-xs font-bold uppercase tracking-widest text-audit opacity-60">WAITING FOR INPUT...</div>
+                        <div id="audit-advice" class="text-[11px] leading-relaxed text-slate-400 bg-black/20 p-4 rounded-xl border-l-2 border-audit/30 min-h-[70px]">
+                            Analysis engine ready...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
